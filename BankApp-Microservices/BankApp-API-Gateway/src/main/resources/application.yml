@@ -1,0 +1,43 @@
+server:
+  port: 2222
+
+spring:
+  application:
+    name: BankApp-API-Gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+      - id: BANKAPP-CUSTOMERSERVICE
+        uri: lb://BANKAPP-CUSTOMERSERVICE
+        predicates:
+        - Path=/customer/**
+        
+      - id: BANKAPP-ACCOUNTSERVICE  
+        uri: lb://BANKAPP-ACCOUNTSERVICE
+        predicates:
+        - Path=/account/**
+        
+      - id: BANKAPP-TRANSACTIONSERVICE
+        uri: lb://BANKAPP-TRANSACTIONSERVICE
+        predicates:
+        - Path=/transaction/**
+        
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+    
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream 
+       
+ 

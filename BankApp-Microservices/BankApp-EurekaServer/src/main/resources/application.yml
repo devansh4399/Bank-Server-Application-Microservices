@@ -1,0 +1,17 @@
+server:
+  port: 8761
+  
+spring:
+  application:
+   name: BankApp-EurekaServer
+   
+#Service Discovery
+#By default, the registry also tries to register itself, so you need to disable that behavior as well.
+eureka:
+  instance:
+    hostname: localhost
+    
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+      
